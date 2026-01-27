@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: serviceapi
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: serviceapi
+      MYSQL_USER: serviceapi
+      MYSQL_PASSWORD: serviceapi1234
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -padmin1234"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  flyway:
+    image: flyway/flyway:latest
+    container_name: flyway_serviceapi
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: >
+      -connectRetries=60
+      -url=jdbc:mysql://mysql:3306/serviceapi?allowPublicKeyRetrieval=true
+      -user=serviceapi
+      -password=serviceapi1234
+      migrate
+    volumes:
+      - ./migrations:/flyway/sql
+
+volumes:
+  mysql_data:
