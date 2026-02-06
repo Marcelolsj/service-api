@@ -2,16 +2,11 @@ package main
 
 import (
 	"log"
-
-	"service-api/infra/http/routers"
-
-	"github.com/gofiber/fiber/v2"
+	"service-api/infra/config"
 )
 
 func main() {
-	app := fiber.New()
-
-	routers.SetupRoutes(app)
+	app := config.SetupApp()
 
 	log.Println("Server starting on :3000")
 	if err := app.Listen(":3000"); err != nil {
