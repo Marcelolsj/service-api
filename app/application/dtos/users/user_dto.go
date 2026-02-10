@@ -9,7 +9,7 @@ type CreateUserRequestDTO struct {
 }
 
 type CreateUserResponseDTO struct {
-	ID          int    `json:"id"`
+	ID          string `json:"id"`
 	Nome        string `json:"nome"`
 	Login       string `json:"login"`
 	Email       string `json:"email"`

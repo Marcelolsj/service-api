@@ -1,26 +1,27 @@
 package use_case
 
 import (
+	"context"
 	"errors"
 	"service-api/domain/models"
 	"service-api/domain/repository"
 )
 
 type IUserUseCase interface {
-	CreateUser(user *models.User) error
+	CreateUser(ctx context.Context, user *models.User) error
 }
 
 type UserUseCase struct {
 	UserRepo repository.UserRepository
 }
 
-func (this UserUseCase) CreateUser(user *models.User) error {
+func (this UserUseCase) CreateUser(ctx context.Context, user *models.User) error {
 	err := this.validateUser(user)
 	if err != nil {
 		return err
 	}
 
-	err = this.UserRepo.CreateUser(user)
+	err = this.UserRepo.CreateUser(ctx, user)
 	if err != nil {
 		return err
 	}

@@ -1,5 +1,5 @@
 CREATE TABLE usuarios (
-    id varchar(36) PRIMARY KEY DEFAULT (UUID()),
+    id varchar(36) PRIMARY KEY,
     nome varchar(250) not null,
     login varchar(250) not null,
     email varchar(250) not null unique,

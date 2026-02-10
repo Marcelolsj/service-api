@@ -1,5 +1,5 @@
 CREATE TABLE logs (
-    id varchar(36) PRIMARY KEY DEFAULT (UUID()),
+    id varchar(36) PRIMARY KEY,
     log varchar(4000) not null,
     id_recurso varchar(36),
     criado_por varchar(36),

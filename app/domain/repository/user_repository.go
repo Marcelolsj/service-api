@@ -1,7 +1,10 @@
 package repository
 
-import "service-api/domain/models"
+import (
+	"context"
+	"service-api/domain/models"
+)
 
 type UserRepository interface {
-	CreateUser(user *models.User) error
+	CreateUser(ctx context.Context, user *models.User) error
 }

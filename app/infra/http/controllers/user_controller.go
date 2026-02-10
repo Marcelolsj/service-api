@@ -17,7 +17,7 @@ func (this *UserController) CreateUser(ctx *fiber.Ctx) error {
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request"})
 	}
 
-	response, err := this.UserService.CreateUser(req)
+	response, err := this.UserService.CreateUser(ctx.UserContext(), req)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": err.Error()})
 	}

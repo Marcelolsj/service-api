@@ -1,12 +1,12 @@
 package routers
 
 import (
-	"service-api/infra/http/controllers"
+	"service-api/infra/config"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func SetupRoutes(app *fiber.App, userController *controllers.UserController) {
+func SetupRoutes(app *fiber.App) {
 	setupInfraRoutes(app)
-	setupUserRoutes(app, userController)
+	setupUserRoutes(app, config.NewUserController())
 }

@@ -12,3 +12,9 @@ docker-compose -p serviceapi restart
 
 ## Roda novamente e aplica novas migrations
 docker compose -p serviceapi up flyway -d
+
+## Drop tabelas
+drop table logs;
+drop table servicos;
+drop table usuarios;
+drop table flyway_schema_history;

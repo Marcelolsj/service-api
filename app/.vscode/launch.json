@@ -10,7 +10,13 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}${pathSeparator}main.go"
+      "program": "${workspaceFolder}${pathSeparator}main.go",
+      "env": {
+        "DB_USER": "serviceapi",
+        "DB_PASS": "serviceapi1234",
+        "DB_HOST": "localhost:3307",
+        "DB_NAME": "serviceapi"
+      }
     }
   ]
 }

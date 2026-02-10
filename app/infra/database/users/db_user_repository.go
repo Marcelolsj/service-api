@@ -1,20 +1,42 @@
 package database_users
 
 import (
-	"fmt"
+	"context"
 	"service-api/domain/models"
 	"service-api/domain/repository"
+
+	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 )
 
 type DbUserRepository struct {
-	// Database connection or ORM instance can be added here
+	db *sqlx.DB
 }
 
-func (db *DbUserRepository) CreateUser(user *models.User) error {
-	fmt.Println("User created:", user)
+func (this *DbUserRepository) CreateUser(ctx context.Context, user *models.User) error {
+	id := uuid.New().String()
+
+	_, err := this.db.ExecContext(ctx,
+		`INSERT INTO usuarios (id, nome, login, email, senha, tipo_usuario)
+		VALUES(?, ?, ?, ?, ?, ?) `,
+		id,
+		user.Nome,
+		user.Login,
+		user.Email,
+		user.Senha,
+		user.TipoUsuario,
+	)
+	if err != nil {
+		return err
+	}
+
+	user.ID = id
+
 	return nil
 }
 
-func NewDbUserRepository() repository.UserRepository {
-	return &DbUserRepository{}
+func NewDbUserRepository(db *sqlx.DB) repository.UserRepository {
+	return &DbUserRepository{
+		db: db,
+	}
 }
