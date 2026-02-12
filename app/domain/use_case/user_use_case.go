@@ -66,26 +66,26 @@ func (this UserUseCase) UpdateUser(ctx context.Context, user *models.UserModel) 
 }
 
 func (this UserUseCase) DeleteUser(ctx context.Context, id string) error {
+	if id == "" {
+		return domain_errors.NewBusinessErrorMsg("O ID é obrigatório")
+	}
+
 	err := this.UserRepo.DeleteUser(ctx, id)
 	if err != nil {
 		return err
-	}
-
-	if id == "" {
-		return domain_errors.NewBusinessErrorMsg("O ID é obrigatório")
 	}
 
 	return err
 }
 
 func (this UserUseCase) GetUser(ctx context.Context, id string) (*models.UserModel, error) {
+	if id == "" {
+		return nil, domain_errors.NewBusinessErrorMsg("O ID é obrigatório")
+	}
+
 	user, err := this.UserRepo.GetUser(ctx, id)
 	if err != nil {
 		return nil, err
-	}
-
-	if id == "" {
-		return nil, domain_errors.NewBusinessErrorMsg("O ID é obrigatório")
 	}
 
 	return user, nil
