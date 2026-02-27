@@ -2,7 +2,7 @@ package use_case
 
 import (
 	"context"
-	domain_errors "service-api/domain/bu_errors"
+	domain_errors "service-api/domain/domain_errors"
 	"service-api/domain/models"
 	"service-api/domain/repository"
 )

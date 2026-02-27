@@ -2,7 +2,8 @@ package http_errors
 
 import (
 	"errors"
-	"service-api/domain/bu_errors"
+
+	domain_errors "service-api/domain/domain_errors"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -31,7 +32,7 @@ func NewHttpErrorStatus(err error, status int) HttpError {
 }
 
 func NewHttpError(err error) *HttpError {
-	var buErr *bu_errors.BusinessError
+	var buErr *domain_errors.BusinessError
 	if errors.As(err, &buErr) {
 		return &HttpError{
 			Msg:    err.Error(),

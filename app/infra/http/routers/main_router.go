@@ -9,4 +9,5 @@ import (
 func SetupRoutes(app *fiber.App) {
 	setupInfraRoutes(app)
 	setupUserRoutes(app, config.NewUserController())
+	setupServiceRoutes(app, config.NewServiceController())
 }

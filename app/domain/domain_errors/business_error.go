@@ -1,4 +1,4 @@
-package bu_errors
+package domain_errors
 
 type BusinessError struct {
 	msg string
