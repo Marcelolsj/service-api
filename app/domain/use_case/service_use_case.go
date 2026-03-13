@@ -20,7 +20,7 @@ type ServiceUseCase struct {
 }
 
 func (this ServiceUseCase) CreateService(ctx context.Context, service *models.ServiceModel) error {
-	err := this.validateService(service, true)
+	err := this.validateService(service)
 	if err != nil {
 		return err
 	}
@@ -41,7 +41,7 @@ func (this ServiceUseCase) CreateService(ctx context.Context, service *models.Se
 }
 
 func (this ServiceUseCase) UpdateService(ctx context.Context, service *models.ServiceModel) error {
-	err := this.validateService(service, false)
+	err := this.validateService(service)
 	if err != nil {
 		return err
 	}
@@ -100,7 +100,7 @@ func (this ServiceUseCase) GetServices(ctx context.Context) ([]models.ServiceMod
 	return services, nil
 }
 
-func (s *ServiceUseCase) validateService(service *models.ServiceModel, insert bool) error {
+func (s *ServiceUseCase) validateService(service *models.ServiceModel) error {
 	if service.Descricao == "" {
 		return domain_errors.NewBusinessErrorMsg("A descrição é obrigatória")
 	}

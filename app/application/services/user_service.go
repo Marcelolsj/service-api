@@ -10,6 +10,7 @@ import (
 
 type UserService struct {
 	UserUseCase use_case.IUserUseCase
+	LogService  *LogService
 }
 
 func (this *UserService) CreateUser(ctx context.Context, createUserDto dtos_users.CreateUserRequestDTO) (*dtos_users.UserResponseDTO, *http_errors.HttpError) {
@@ -18,6 +19,8 @@ func (this *UserService) CreateUser(ctx context.Context, createUserDto dtos_user
 	if err := this.UserUseCase.CreateUser(ctx, &user); err != nil {
 		return nil, http_errors.NewHttpError(err)
 	}
+
+	this.LogService.CreateLog(ctx, user.ID, "Usuário criado")
 
 	return mappers.MapUserToUserResponseDTO(user), nil
 }
@@ -29,6 +32,8 @@ func (this *UserService) UpdateUser(ctx context.Context, updateUserDto dtos_user
 		return nil, http_errors.NewHttpError(err)
 	}
 
+	this.LogService.CreateLog(ctx, user.ID, "Usuário atualizado")
+
 	return mappers.MapUserToUserResponseDTO(user), nil
 }
 
@@ -36,6 +41,8 @@ func (this *UserService) DeleteUser(ctx context.Context, id string) *http_errors
 	if err := this.UserUseCase.DeleteUser(ctx, id); err != nil {
 		return http_errors.NewHttpError(err)
 	}
+
+	this.LogService.CreateLog(ctx, id, "Usuário deletado")
 
 	return nil
 }
@@ -58,8 +65,9 @@ func (this *UserService) GetUser(ctx context.Context, id string) (*dtos_users.Us
 	return mappers.MapUserToUserResponseDTO(*user), nil
 }
 
-func NewUserService(userUseCase use_case.IUserUseCase) *UserService {
+func NewUserService(userUseCase use_case.IUserUseCase, logService *LogService) *UserService {
 	return &UserService{
 		UserUseCase: userUseCase,
+		LogService:  logService,
 	}
 }
